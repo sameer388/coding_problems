@@ -1,0 +1,95 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define fast                          \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(NULL);                    \
+    cout.tie(NULL);
+#define int long long
+#define pii pair<int, int>
+#define ff first
+#define ss second
+#define mod 1000000007
+// #define mod 998244353
+#define MAX 100001
+#define ourmap unordered_map<int, int>
+#define inf INT64_MAX
+#define in(ar, n, si)                 \
+    for (int i = si; i < (int)n; i++) \
+        cin >> ar[i];
+#define out(ar, n, si)                \
+    for (int i = si; i < (int)n; i++) \
+    cout << ar[i] << " "
+#define all(a) a.begin(), a.end()
+#define rall(a) a.rbegin(), a.rend()
+#define ninf INT64_MIN
+int maxE(vector<int> a, int n)
+{
+    int k = ninf;
+    for (int i = 0; i < n; i++)
+    {
+        k = max(k, a[i]);
+    }
+    return k;
+}
+int maxi(vector<int> a, int n)
+{
+    int index = 0;
+    for (int i = 1; i < n; i++)
+    {
+        if (a[i] > a[index])
+        {
+            index = i;
+        }
+    }
+    return index;
+}
+int32_t main()
+{
+    fast int t;
+    cin >> t;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        vector<int> a(n);
+        vector<int> b(n);
+        in(a, n, 0)
+            in(b, n, 0);
+        int flag = 0;
+        int x = maxE(a, n);
+        int y = maxE(b, n);
+        int ans = x * y;
+        if (x <= y)
+        {
+            flag = 1;
+        }
+        if (flag == 0)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                int ind = maxi(b, n);
+                int temp = a[ind];
+                a[ind] = b[ind];
+                b[ind] = temp;
+                int c = maxE(a, n);
+                int d = maxE(b, n);
+                ans = min(ans, c * d);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < n; i++)
+            {
+                int ind = maxi(a, n);
+                int temp = a[ind];
+                a[ind] = b[ind];
+                b[ind] = temp;
+                int c = maxE(a, n);
+                int d = maxE(b, n);
+                ans = min(ans, c * d);
+            }
+        }
+        cout<<ans<<endl;
+    }
+    return 0;
+}
